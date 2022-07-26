@@ -1,6 +1,8 @@
 package com.sofka.cyclingtour.service;
 
 import com.sofka.cyclingtour.dto.CyclistDto;
+import com.sofka.cyclingtour.entity.Country;
+import com.sofka.cyclingtour.entity.Cyclist;
 import com.sofka.cyclingtour.entity.Team;
 import com.sofka.cyclingtour.mapper.CyclistMapper;
 import com.sofka.cyclingtour.repository.CyclistRepository;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CyclistServiceImpl implements CyclistService{
@@ -28,8 +31,8 @@ public class CyclistServiceImpl implements CyclistService{
     }
 
     @Override
-    public List<CyclistDto> getCyclistsByCountry(String country) {
-        return mapper.cyclistListToCyclistDtoList(cyclistRepository.findByCountry(country));
+    public List<CyclistDto> getCyclistsByCountryId(Long countryId) {
+        return mapper.cyclistListToCyclistDtoList(cyclistRepository.findByCountryId(countryId));
     }
 
     @Override
@@ -40,12 +43,17 @@ public class CyclistServiceImpl implements CyclistService{
     @Override
     public Team saveCyclist(CyclistDto cyclistDto) {
         Team team = teamRepository.findById(cyclistDto.getTeamId()).get();
-        team.addCyclist(mapper.cyclistDtoToCyclist(cyclistDto));
+        if (team.getCyclistsList().size() < 8) {
+            cyclistDto.setCyclistCode(UUID.randomUUID().toString().substring(3,6).toUpperCase());
+            team.addCyclist(mapper.cyclistDtoToCyclist(cyclistDto));
+        }
         return teamRepository.save(team);
     }
 
     @Override
     public CyclistDto updateCyclist(CyclistDto cyclistDto) {
+        Cyclist cyclist = cyclistRepository.findById(cyclistDto.getId()).get();
+        cyclistDto.setCyclistCode(cyclist.getCyclistCode());
         return mapper.cyclistToCyclistDto(cyclistRepository.save(mapper.cyclistDtoToCyclist(cyclistDto)));
     }
 

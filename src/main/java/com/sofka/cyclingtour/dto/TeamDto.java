@@ -10,6 +10,6 @@ public class TeamDto {
     private Long id;
     private String name;
     private String teamCode;
-    private String country;
+    private Long countryId;
     private List<CyclistDto> cyclistsList = new ArrayList<>();
 }

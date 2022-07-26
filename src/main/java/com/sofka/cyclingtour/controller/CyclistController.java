@@ -23,8 +23,8 @@ public class CyclistController {
     }
 
     @GetMapping("/cyclists/country")
-    public List<CyclistDto> getCyclistsByCountry(@RequestParam String country) {
-        return cyclistService.getCyclistsByCountry(country);
+    public List<CyclistDto> getCyclistsByCountry(@RequestParam Long countryId) {
+        return cyclistService.getCyclistsByCountryId(countryId);
     }
 
     @GetMapping("/cyclists/teamid")
@@ -38,8 +38,8 @@ public class CyclistController {
     }
 
     @PutMapping("/cyclists")
-    public Team updateCyclist(@RequestBody CyclistDto cyclistDto) {
-        return cyclistService.saveCyclist(cyclistDto);
+    public CyclistDto updateCyclist(@RequestBody CyclistDto cyclistDto) {
+        return cyclistService.updateCyclist(cyclistDto);
     }
 
     @DeleteMapping("/cyclists/{id}")

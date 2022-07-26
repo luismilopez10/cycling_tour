@@ -28,7 +28,7 @@ public class TeamController {
 
     @PutMapping("/teams")
     public TeamDto updateTeam(@RequestBody TeamDto teamDto) {
-        return teamService.saveTeam(teamDto);
+        return teamService.updateTeam(teamDto);
     }
 
     @DeleteMapping("/teams/{id}")
