@@ -22,6 +22,16 @@ public class CyclistController {
         return cyclistService.getAllCyclists();
     }
 
+    @GetMapping("/cyclists/country")
+    public List<CyclistDto> getCyclistsByCountry(@RequestParam String country) {
+        return cyclistService.getCyclistsByCountry(country);
+    }
+
+    @GetMapping("/cyclists/teamid")
+    public List<CyclistDto> getCyclistsByTeamId(@RequestParam Long teamId) {
+        return cyclistService.getCyclistsByTeamId(teamId);
+    }
+
     @PostMapping("/cyclists")
     public Team saveCyclist(@RequestBody CyclistDto cyclistDto) {
         return cyclistService.saveCyclist(cyclistDto);

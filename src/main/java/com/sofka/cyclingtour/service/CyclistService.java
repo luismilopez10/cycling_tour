@@ -9,6 +9,10 @@ public interface CyclistService {
 
     List<CyclistDto> getAllCyclists();
 
+    List<CyclistDto> getCyclistsByCountry(String country);
+
+    List<CyclistDto> getCyclistsByTeamId(Long teamId);
+
     Team saveCyclist(CyclistDto cyclistDto);
 
     CyclistDto updateCyclist(CyclistDto cyclistDto);

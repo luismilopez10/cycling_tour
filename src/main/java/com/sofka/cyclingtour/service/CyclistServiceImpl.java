@@ -8,7 +8,6 @@ import com.sofka.cyclingtour.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,11 +28,20 @@ public class CyclistServiceImpl implements CyclistService{
     }
 
     @Override
+    public List<CyclistDto> getCyclistsByCountry(String country) {
+        return mapper.cyclistListToCyclistDtoList(cyclistRepository.findByCountry(country));
+    }
+
+    @Override
+    public List<CyclistDto> getCyclistsByTeamId(Long teamId) {
+        return mapper.cyclistListToCyclistDtoList(cyclistRepository.findByTeamId(teamId));
+    }
+
+    @Override
     public Team saveCyclist(CyclistDto cyclistDto) {
         Team team = teamRepository.findById(cyclistDto.getTeamId()).get();
         team.addCyclist(mapper.cyclistDtoToCyclist(cyclistDto));
         return teamRepository.save(team);
-        //return mapper.fromEntityToCyclistDto(cyclistRepository.save(mapper.fromCyclistDtoToEntity(cyclistDto)));
     }
 
     @Override
